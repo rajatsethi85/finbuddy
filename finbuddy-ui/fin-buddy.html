@@ -1,0 +1,2542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finbuddy - Your Financial Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .nav-item {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: #fbbf24;
+            border-radius: 2px;
+        }
+        
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+
+        .feature-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .feature-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Dark Mode Styles */
+        .dark {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+        }
+
+        /* Dark mode body background - force override */
+        body.dark {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+            min-height: 100vh !important;
+        }
+
+        /* Dark mode page backgrounds - force override all variations */
+        .dark .bg-gradient-to-br {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+        }
+
+        .dark body.bg-gradient-to-br {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+        }
+
+        .dark .bg-white {
+            background-color: #1f2937 !important;
+        }
+
+        .dark .text-gray-800 {
+            color: #f9fafb !important;
+        }
+
+        .dark .text-gray-600 {
+            color: #d1d5db !important;
+        }
+
+        .dark .text-gray-700 {
+            color: #e5e7eb !important;
+        }
+
+        .dark .text-gray-900 {
+            color: #f9fafb !important;
+        }
+
+        .dark .text-black {
+            color: #f9fafb !important;
+        }
+
+        /* Ensure all text elements are readable in dark mode */
+        .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+            color: #f9fafb !important;
+        }
+
+        .dark p {
+            color: #d1d5db !important;
+        }
+
+        .dark span {
+            color: #d1d5db !important;
+        }
+
+        .dark li {
+            color: #d1d5db !important;
+        }
+
+        .dark .bg-gray-50 {
+            background-color: #374151 !important;
+        }
+
+        .dark .bg-gray-100 {
+            background-color: #4b5563 !important;
+        }
+
+        /* Force all text inside white/gray backgrounds to be light in dark mode */
+        .dark .bg-white *,
+        .dark .bg-gray-50 *,
+        .dark .bg-gray-100 * {
+            color: #f9fafb !important;
+        }
+
+        /* Override any remaining dark text */
+        .dark .bg-white h1, .dark .bg-white h2, .dark .bg-white h3, .dark .bg-white h4, .dark .bg-white h5, .dark .bg-white h6,
+        .dark .bg-gray-50 h1, .dark .bg-gray-50 h2, .dark .bg-gray-50 h3, .dark .bg-gray-50 h4, .dark .bg-gray-50 h5, .dark .bg-gray-50 h6,
+        .dark .bg-gray-100 h1, .dark .bg-gray-100 h2, .dark .bg-gray-100 h3, .dark .bg-gray-100 h4, .dark .bg-gray-100 h5, .dark .bg-gray-100 h6 {
+            color: #f9fafb !important;
+        }
+
+        .dark .bg-white p, .dark .bg-white span, .dark .bg-white div,
+        .dark .bg-gray-50 p, .dark .bg-gray-50 span, .dark .bg-gray-50 div,
+        .dark .bg-gray-100 p, .dark .bg-gray-100 span, .dark .bg-gray-100 div {
+            color: #d1d5db !important;
+        }
+
+        .dark .border-gray-300 {
+            border-color: #6b7280 !important;
+        }
+
+        .dark .shadow-lg {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        .dark .hero-gradient {
+            background: linear-gradient(135deg, #4c1d95 0%, #581c87 50%, #7c2d12 100%);
+        }
+
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #4c1d95 0%, #581c87 100%);
+        }
+
+        /* Dark mode card backgrounds */
+        .dark .bg-gradient-to-br.from-blue-50 {
+            background: linear-gradient(to bottom right, #1e3a8a, #1e40af) !important;
+        }
+
+        .dark .bg-gradient-to-br.from-green-50 {
+            background: linear-gradient(to bottom right, #166534, #15803d) !important;
+        }
+
+        .dark .bg-gradient-to-br.from-pink-50 {
+            background: linear-gradient(to bottom right, #be185d, #c2185b) !important;
+        }
+
+        .dark .bg-gradient-to-br.from-yellow-50 {
+            background: linear-gradient(to bottom right, #ca8a04, #d97706) !important;
+        }
+
+        .dark .bg-gradient-to-br.from-purple-50 {
+            background: linear-gradient(to bottom right, #7c3aed, #8b5cf6) !important;
+        }
+
+        .dark .bg-gradient-to-br.from-cyan-50 {
+            background: linear-gradient(to bottom right, #0891b2, #0284c7) !important;
+        }
+
+        .dark .bg-gradient-to-br.from-teal-50 {
+            background: linear-gradient(to bottom right, #0f766e, #0d9488) !important;
+        }
+
+        .dark .bg-gradient-to-br.from-rose-50 {
+            background: linear-gradient(to bottom right, #e11d48, #f43f5e) !important;
+        }
+
+        .dark .bg-gradient-to-br.from-orange-50 {
+            background: linear-gradient(to bottom right, #ea580c, #f97316) !important;
+        }
+
+        .dark .bg-gradient-to-br.from-indigo-50 {
+            background: linear-gradient(to bottom right, #4338ca, #6366f1) !important;
+        }
+
+        /* Specific card color fixes */
+        .dark .bg-pink-50 {
+            background-color: #831843 !important;
+        }
+
+        .dark .bg-purple-50 {
+            background-color: #581c87 !important;
+        }
+
+        .dark .bg-teal-50 {
+            background-color: #134e4a !important;
+        }
+
+        .dark .bg-yellow-50 {
+            background-color: #92400e !important;
+        }
+
+        .dark .bg-blue-50 {
+            background-color: #1e3a8a !important;
+        }
+
+        .dark .bg-green-50 {
+            background-color: #166534 !important;
+        }
+
+        .dark .bg-cyan-50 {
+            background-color: #155e75 !important;
+        }
+
+        .dark .bg-sky-100 {
+            background-color: #0c4a6e !important;
+        }
+
+        /* Color-specific text fixes */
+        .dark .text-pink-800 {
+            color: #fce7f3 !important;
+        }
+
+        .dark .text-purple-800 {
+            color: #f3e8ff !important;
+        }
+
+        .dark .text-teal-800 {
+            color: #ccfbf1 !important;
+        }
+
+        .dark .text-yellow-800 {
+            color: #fef3c7 !important;
+        }
+
+        .dark .text-blue-800 {
+            color: #dbeafe !important;
+        }
+
+        .dark .text-green-800 {
+            color: #dcfce7 !important;
+        }
+
+        .dark .text-cyan-800 {
+            color: #cffafe !important;
+        }
+
+        .dark .text-red-800 {
+            color: #fecaca !important;
+        }
+
+        .dark .text-orange-800 {
+            color: #fed7aa !important;
+        }
+
+        /* Border colors for dark mode */
+        .dark .border-blue-100 {
+            border-color: #1e40af !important;
+        }
+
+        .dark .border-green-100 {
+            border-color: #15803d !important;
+        }
+
+        .dark .border-pink-100 {
+            border-color: #be185d !important;
+        }
+
+        .dark .border-yellow-100 {
+            border-color: #d97706 !important;
+        }
+
+        .dark .border-purple-100 {
+            border-color: #7c3aed !important;
+        }
+
+        .dark .border-cyan-100 {
+            border-color: #0891b2 !important;
+        }
+
+        .dark .border-yellow-200 {
+            border-color: #fbbf24 !important;
+        }
+
+        /* Additional text color fixes for dark mode */
+        .dark .text-white {
+            color: #f9fafb !important;
+        }
+
+        .dark button {
+            color: inherit !important;
+        }
+
+        .dark .bg-gray-50 {
+            background-color: #374151 !important;
+            color: #f9fafb !important;
+        }
+
+        .dark .bg-gray-100 {
+            background-color: #4b5563 !important;
+            color: #f9fafb !important;
+        }
+
+        /* Fix specific text colors that might be problematic */
+        .dark .text-gray-500 {
+            color: #9ca3af !important;
+        }
+
+        .dark .text-gray-400 {
+            color: #9ca3af !important;
+        }
+
+        /* Ensure form inputs are readable */
+        .dark input {
+            background-color: #374151 !important;
+            color: #f9fafb !important;
+            border-color: #6b7280 !important;
+        }
+
+        .dark input::placeholder {
+            color: #9ca3af !important;
+        }
+
+        /* Form styling */
+        .user-type-card {
+            transition: all 0.3s ease;
+        }
+        
+        .user-type-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        input[type="radio"]:checked + .user-type-card {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Comprehensive dark mode text fixes */
+        .dark .text-white {
+            color: #f9fafb !important;
+        }
+
+        /* Fix button text colors */
+        .dark button:not(.bg-white):not(.bg-yellow-400):not(.bg-green-500):not(.bg-blue-500):not(.bg-purple-500):not(.bg-red-500):not(.bg-orange-500) {
+            color: #f9fafb !important;
+        }
+
+        /* Fix specific text color classes */
+        .dark .text-gray-500 {
+            color: #9ca3af !important;
+        }
+
+        .dark .text-gray-400 {
+            color: #9ca3af !important;
+        }
+
+        /* Navigation text fixes */
+        .dark .nav-item {
+            color: #f9fafb !important;
+        }
+
+        /* Card content fixes */
+        .dark .card-hover h3,
+        .dark .card-hover h4,
+        .dark .card-hover p {
+            color: inherit !important;
+        }
+
+        /* Ensure form inputs are readable */
+        .dark input {
+            background-color: #374151 !important;
+            color: #f9fafb !important;
+            border-color: #6b7280 !important;
+        }
+
+        .dark input::placeholder {
+            color: #9ca3af !important;
+        }
+
+        /* Fix dropdown text */
+        .dark #languageDropdown {
+            background-color: #1f2937 !important;
+        }
+
+        .dark #languageDropdown button {
+            color: #f9fafb !important;
+        }
+
+        .dark #languageDropdown button:hover {
+            background-color: #374151 !important;
+        }
+
+        /* Fix any remaining issues with specific sections */
+        .dark .section h2,
+        .dark .section h3,
+        .dark .section h4,
+        .dark .section p,
+        .dark .section span,
+        .dark .section div {
+            color: #f9fafb !important;
+        }
+
+        /* Override any inline styles or specific classes */
+        .dark * {
+            color: inherit !important;
+        }
+
+        .dark .bg-white,
+        .dark .bg-gray-50,
+        .dark .bg-gray-100 {
+            color: #f9fafb !important;
+        }
+
+        /* Ensure all children of dark backgrounds have light text */
+        .dark .bg-white > *,
+        .dark .bg-gray-50 > *,
+        .dark .bg-gray-100 > * {
+            color: #f9fafb !important;
+        }
+
+        /* Fix nested elements */
+        .dark .bg-white * *,
+        .dark .bg-gray-50 * *,
+        .dark .bg-gray-100 * * {
+            color: #d1d5db !important;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="gradient-bg shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo - Now Clickable -->
+                <div class="flex items-center space-x-2 cursor-pointer hover:scale-105 transition-transform" onclick="showLandingPage()">
+                    <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center bounce">
+                        <span class="text-2xl">💰</span>
+                    </div>
+                    <h1 class="text-2xl font-bold text-white">Finbuddy</h1>
+                </div>
+                
+                <!-- Main App Navigation (Hidden initially) -->
+                <div id="mainNavigation" class="hidden md:flex items-center space-x-8">
+                    <!-- Customer Navigation -->
+                    <div id="customerNav" class="hidden flex items-center space-x-8">
+                        <button class="nav-item active text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20" onclick="showSection('transactions')">
+                            <span class="mr-2">💳</span>Transactions
+                        </button>
+                        <button class="nav-item text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20" onclick="showSection('women')">
+                            <span class="mr-2">👩</span>Women
+                        </button>
+                        <button class="nav-item text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20" onclick="showSection('learn')">
+                            <span class="mr-2">📚</span>Learn
+                        </button>
+                        <button class="nav-item text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20" onclick="showSection('children')">
+                            <span class="mr-2">👶</span>Children
+                        </button>
+                        <button class="nav-item text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20" onclick="showSection('chatbot')">
+                            <span class="mr-2">🤖</span>FinBot
+                        </button>
+                    </div>
+                    
+                    <!-- Retailer Navigation -->
+                    <div id="retailerNav" class="hidden flex items-center space-x-8">
+                        <button class="nav-item active text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20" onclick="showSection('transactions')">
+                            <span class="mr-2">💳</span>Transactions
+                        </button>
+                        <button class="nav-item text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20" onclick="showSection('budget')">
+                            <span class="mr-2">📊</span>Budget Planner
+                        </button>
+                        <button class="nav-item text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20" onclick="showSection('funding')">
+                            <span class="mr-2">💰</span>Fund Finder
+                        </button>
+                        <button class="nav-item text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20" onclick="showSection('tax')">
+                            <span class="mr-2">🧮</span>Tax Calculator
+                        </button>
+                        <button class="nav-item text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20" onclick="showSection('strategic')">
+                            <span class="mr-2">📈</span>Strategic Planning
+                        </button>
+                        <button class="nav-item text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20" onclick="showSection('chatbot')">
+                            <span class="mr-2">🤖</span>FinBot
+                        </button>
+                        <button class="nav-item text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20" onclick="showSection('learn')">
+                            <span class="mr-2">📚</span>Learn
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Landing Page Navigation -->
+                <div id="landingNavigation" class="md:flex items-center space-x-8">
+                    <!-- Language Selector -->
+                    <div class="relative">
+                        <button id="languageButton" class="text-white font-medium px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 flex items-center" onclick="toggleLanguageDropdown()">
+                            <span class="mr-2">🌐</span>
+                            <span id="currentLanguage">EN</span>
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="languageDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-50">
+                            <button onclick="changeLanguage('en')" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-t-lg">
+                                🇺🇸 English
+                            </button>
+                            <button onclick="changeLanguage('hi')" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                🇮🇳 हिंदी (Hindi)
+                            </button>
+                            <button onclick="changeLanguage('ta')" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                🇮🇳 தமிழ் (Tamil)
+                            </button>
+                            <button onclick="changeLanguage('te')" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                🇮🇳 తెలుగు (Telugu)
+                            </button>
+                            <button onclick="changeLanguage('bn')" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                🇮🇳 বাংলা (Bengali)
+                            </button>
+                            <button onclick="changeLanguage('mr')" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-b-lg">
+                                🇮🇳 मराठी (Marathi)
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button id="darkModeToggle" class="text-white font-medium px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-20" onclick="toggleDarkMode()">
+                        <span id="darkModeIcon">🌙</span>
+                    </button>
+                    
+                    <button class="bg-white text-purple-800 font-bold px-6 py-2 rounded-lg hover:bg-gray-100 transition-colors" onclick="showSignInForm()">Login</button>
+                    <button class="bg-yellow-400 text-purple-800 font-bold px-6 py-2 rounded-lg hover:bg-yellow-300 transition-colors" onclick="showSignInForm()">Sign Up</button>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button class="text-white hover:text-yellow-300" onclick="toggleMobileMenu()">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile menu -->
+            <div id="mobileMenu" class="hidden md:hidden pb-4">
+                <!-- Main App Mobile Menu -->
+                <div id="mainMobileMenu" class="hidden">
+                    <!-- Customer Mobile Menu -->
+                    <div id="customerMobileMenu" class="hidden">
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2" onclick="showSection('transactions')">
+                            <span class="mr-2">💳</span>Transactions
+                        </button>
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2" onclick="showSection('women')">
+                            <span class="mr-2">👩</span>Women
+                        </button>
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2" onclick="showSection('learn')">
+                            <span class="mr-2">📚</span>Learn
+                        </button>
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2" onclick="showSection('children')">
+                            <span class="mr-2">👶</span>Children
+                        </button>
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2" onclick="showSection('chatbot')">
+                            <span class="mr-2">🤖</span>FinBot
+                        </button>
+                    </div>
+                    
+                    <!-- Retailer Mobile Menu -->
+                    <div id="retailerMobileMenu" class="hidden">
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2" onclick="showSection('transactions')">
+                            <span class="mr-2">💳</span>Transactions
+                        </button>
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2" onclick="showSection('budget')">
+                            <span class="mr-2">📊</span>Budget Planner
+                        </button>
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2" onclick="showSection('funding')">
+                            <span class="mr-2">💰</span>Fund Finder
+                        </button>
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2" onclick="showSection('tax')">
+                            <span class="mr-2">🧮</span>Tax Calculator
+                        </button>
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2" onclick="showSection('strategic')">
+                            <span class="mr-2">📈</span>Strategic Planning
+                        </button>
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2" onclick="showSection('chatbot')">
+                            <span class="mr-2">🤖</span>FinBot
+                        </button>
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2" onclick="showSection('learn')">
+                            <span class="mr-2">📚</span>Learn
+                        </button>
+                    </div>
+                    
+                    <!-- Mobile Language & Theme Controls -->
+                    <div class="border-t border-white border-opacity-20 mt-4 pt-4">
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2" onclick="toggleLanguageDropdown()">
+                            <span class="mr-2">🌐</span>Language: <span id="currentLanguageMobile">English</span>
+                        </button>
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20" onclick="toggleDarkMode()">
+                            <span id="darkModeIconMobile">🌙</span><span class="ml-2">Dark Mode</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Landing Mobile Menu -->
+                <div id="landingMobileMenu">
+                    <!-- Mobile Language & Theme Controls for Landing -->
+                    <div class="mb-4">
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2" onclick="toggleLanguageDropdown()">
+                            <span class="mr-2">🌐</span>Language: <span id="currentLanguageMobileLanding">English</span>
+                        </button>
+                        <button class="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-4" onclick="toggleDarkMode()">
+                            <span id="darkModeIconMobileLanding">🌙</span><span class="ml-2">Dark Mode</span>
+                        </button>
+                    </div>
+                    <button class="block w-full bg-white text-purple-800 font-bold px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors mb-2" onclick="showSignInForm()">Login</button>
+                    <button class="block w-full bg-yellow-400 text-purple-800 font-bold px-4 py-2 rounded-lg hover:bg-yellow-300 transition-colors" onclick="showSignInForm()">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Landing Page -->
+    <div id="landingPage">
+        <!-- Hero Section -->
+        <section class="hero-gradient py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="text-white">
+                        <h1 class="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                            Your Financial Journey Starts Here 🚀
+                        </h1>
+                        <p class="text-xl mb-8 opacity-90">
+                            Finbuddy empowers customers and retailers with smart pay-later solutions, business funding, and financial education for everyone in the family.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button onclick="showUserTypeSelection()" class="bg-yellow-400 text-purple-800 font-bold px-8 py-4 rounded-lg hover:bg-yellow-300 transition-colors text-lg">
+                                Get Started Free 🎉
+                            </button>
+                            <button onclick="scrollToSection('features')" class="border-2 border-white text-white font-bold px-8 py-4 rounded-lg hover:bg-white hover:text-purple-800 transition-colors text-lg">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Hero Image -->
+                    <div class="text-center">
+                        <div class="relative">
+                            <!-- Main Customer Image -->
+                            <div class="bg-white bg-opacity-20 rounded-3xl p-8 floating">
+                                <div class="text-8xl mb-4">👨‍👩‍👧‍👦</div>
+                                <div class="text-4xl mb-2">💳</div>
+                                <div class="text-2xl">📱</div>
+                            </div>
+                            
+                            <!-- Floating Elements -->
+                            <div class="absolute -top-4 -left-4 bg-yellow-400 rounded-full p-3 floating" style="animation-delay: 0.5s">
+                                <span class="text-2xl">💰</span>
+                            </div>
+                            <div class="absolute -top-2 -right-6 bg-green-400 rounded-full p-3 floating" style="animation-delay: 1s">
+                                <span class="text-2xl">📈</span>
+                            </div>
+                            <div class="absolute -bottom-4 left-8 bg-blue-400 rounded-full p-3 floating" style="animation-delay: 1.5s">
+                                <span class="text-2xl">🏪</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-4">🌟 Powerful Features for Everyone</h2>
+                    <p class="text-xl text-gray-600">Discover how Finbuddy transforms your financial experience</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Customer Features -->
+                    <div class="card-hover bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-8 border border-blue-100">
+                        <div class="feature-icon text-5xl mb-4">🛍️</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Buy Now, Pay Later</h3>
+                        <p class="text-gray-600 mb-4">Shop your favorite items and pay in flexible installments. No hidden fees, transparent terms.</p>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Instant approval</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Flexible payment plans</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>No interest on time</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-hover bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-8 border border-green-100">
+                        <div class="feature-icon text-5xl mb-4">🏪</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Business Solutions</h3>
+                        <p class="text-gray-600 mb-4">Grow your business with instant funding, payment processing, and customer management tools.</p>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Up to $50K funding</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>24-hour approval</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>SME tools included</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-hover bg-gradient-to-br from-pink-50 to-rose-50 rounded-xl p-8 border border-pink-100">
+                        <div class="feature-icon text-5xl mb-4">👩</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Women Empowerment</h3>
+                        <p class="text-gray-600 mb-4">Specialized financial tools and community support designed for women's unique financial journey.</p>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Financial independence</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Community support</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Career growth resources</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-hover bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-8 border border-yellow-100">
+                        <div class="feature-icon text-5xl mb-4">📚</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Financial Education</h3>
+                        <p class="text-gray-600 mb-4">Interactive courses, achievements, and personalized learning paths to boost your financial literacy.</p>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Interactive lessons</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Achievement system</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Progress tracking</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-hover bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-8 border border-purple-100">
+                        <div class="feature-icon text-5xl mb-4">👶</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Kids Financial Learning</h3>
+                        <p class="text-gray-600 mb-4">Fun games, investment trees, and parental controls to teach children about money management.</p>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Investment tree game</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Parental controls</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Educational stories</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card-hover bg-gradient-to-br from-cyan-50 to-blue-50 rounded-xl p-8 border border-cyan-100">
+                        <div class="feature-icon text-5xl mb-4">📊</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Smart Analytics</h3>
+                        <p class="text-gray-600 mb-4">Real-time insights, spending patterns, and personalized recommendations for better financial decisions.</p>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Spending insights</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Payment reminders</li>
+                            <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Financial health score</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section id="benefits" class="py-20 bg-gradient-to-br from-purple-50 to-pink-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-4">💎 Why Choose Finbuddy?</h2>
+                    <p class="text-xl text-gray-600">Join thousands of satisfied customers and businesses</p>
+                </div>
+                
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="space-y-8">
+                            <div class="flex items-start">
+                                <div class="bg-green-100 rounded-full p-3 mr-4">
+                                    <span class="text-2xl">🚀</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Instant Approval</h3>
+                                    <p class="text-gray-600">Get approved in seconds with our AI-powered credit assessment system.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 rounded-full p-3 mr-4">
+                                    <span class="text-2xl">🔒</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Bank-Level Security</h3>
+                                    <p class="text-gray-600">Your data is protected with 256-bit encryption and advanced fraud detection.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-purple-100 rounded-full p-3 mr-4">
+                                    <span class="text-2xl">📱</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Mobile-First Design</h3>
+                                    <p class="text-gray-600">Seamless experience across all devices with our responsive design.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-yellow-100 rounded-full p-3 mr-4">
+                                    <span class="text-2xl">🎯</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Personalized Experience</h3>
+                                    <p class="text-gray-600">AI-driven recommendations tailored to your financial goals and habits.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Customer-Centric Image -->
+                    <div class="text-center">
+                        <div class="bg-white rounded-3xl p-8 shadow-2xl">
+                            <div class="grid grid-cols-2 gap-6 mb-6">
+                                <div class="bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl p-4">
+                                    <div class="text-3xl mb-2">👨‍💼</div>
+                                    <p class="text-sm font-semibold text-gray-700">Business Owner</p>
+                                    <p class="text-xs text-gray-600">Growing with funding</p>
+                                </div>
+                                <div class="bg-gradient-to-br from-pink-100 to-rose-100 rounded-xl p-4">
+                                    <div class="text-3xl mb-2">👩‍🎓</div>
+                                    <p class="text-sm font-semibold text-gray-700">Student</p>
+                                    <p class="text-xs text-gray-600">Learning & saving</p>
+                                </div>
+                                <div class="bg-gradient-to-br from-green-100 to-teal-100 rounded-xl p-4">
+                                    <div class="text-3xl mb-2">👨‍👩‍👧‍👦</div>
+                                    <p class="text-sm font-semibold text-gray-700">Family</p>
+                                    <p class="text-xs text-gray-600">Teaching kids money</p>
+                                </div>
+                                <div class="bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl p-4">
+                                    <div class="text-3xl mb-2">🛍️</div>
+                                    <p class="text-sm font-semibold text-gray-700">Shopper</p>
+                                    <p class="text-xs text-gray-600">Buy now, pay later</p>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl mb-2">💝</div>
+                                <p class="font-bold text-gray-800">One App, Everyone's Needs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-4">💬 What Our Users Say</h2>
+                    <p class="text-xl text-gray-600">Real stories from real people</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="card-hover bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-8 border border-blue-100">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-2xl">👩‍💼</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Sarah Johnson</h4>
+                                <p class="text-gray-600 text-sm">Small Business Owner</p>
+                            </div>
+                        </div>
+                        <div class="text-yellow-400 mb-4">⭐⭐⭐⭐⭐</div>
+                        <p class="text-gray-700 italic">"Finbuddy's business funding helped me expand my store. The approval was instant and the terms were transparent. Highly recommend!"</p>
+                    </div>
+                    
+                    <div class="card-hover bg-gradient-to-br from-pink-50 to-rose-50 rounded-xl p-8 border border-pink-100">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-2xl">👨‍👩‍👧</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Mike & Emma Chen</h4>
+                                <p class="text-gray-600 text-sm">Parents</p>
+                            </div>
+                        </div>
+                        <div class="text-yellow-400 mb-4">⭐⭐⭐⭐⭐</div>
+                        <p class="text-gray-700 italic">"The kids section is amazing! Our daughter loves the investment tree game and is actually learning about saving money."</p>
+                    </div>
+                    
+                    <div class="card-hover bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-8 border border-green-100">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-2xl">👩‍🎓</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Jessica Martinez</h4>
+                                <p class="text-gray-600 text-sm">College Student</p>
+                            </div>
+                        </div>
+                        <div class="text-yellow-400 mb-4">⭐⭐⭐⭐⭐</div>
+                        <p class="text-gray-700 italic">"Buy now, pay later feature is perfect for students. No hidden fees and flexible payment options made my life easier!"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-20 gradient-bg">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-bold text-white mb-6">Ready to Transform Your Financial Life? 🌟</h2>
+                <p class="text-xl text-white opacity-90 mb-8">Join thousands of users who are already enjoying smarter financial solutions</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="showUserTypeSelection()" class="bg-yellow-400 text-purple-800 font-bold px-8 py-4 rounded-lg hover:bg-yellow-300 transition-colors text-lg">
+                        Start Your Journey 🚀
+                    </button>
+                    <button onclick="scrollToSection('features')" class="border-2 border-white text-white font-bold px-8 py-4 rounded-lg hover:bg-white hover:text-purple-800 transition-colors text-lg">
+                        Learn More
+                    </button>
+                </div>
+                
+                <div class="mt-12 grid md:grid-cols-3 gap-8 text-white">
+                    <div>
+                        <div class="text-3xl font-bold">10,000+</div>
+                        <p class="opacity-90">Happy Customers</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold">₹41.6Cr+</div>
+                        <p class="opacity-90">Transactions Processed</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold">99.9%</div>
+                        <p class="opacity-90">Uptime Guarantee</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Sign In Form -->
+    <div id="signInForm" class="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-16 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl p-8">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-3xl">💰</span>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Welcome to Finbuddy!</h2>
+                <p class="text-gray-600">Sign in to your account</p>
+            </div>
+            
+            <form id="loginForm" onsubmit="handleSignIn(event)">
+                <!-- User Type Selection -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-3">I am a:</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="relative">
+                            <input type="radio" name="userType" value="customer" class="sr-only" onchange="updateFormFields()">
+                            <div class="user-type-card border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-blue-500 transition-colors">
+                                <div class="text-center">
+                                    <span class="text-2xl mb-2 block">🛍️</span>
+                                    <span class="text-sm font-medium text-gray-700">Customer</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="userType" value="retailer" class="sr-only" onchange="updateFormFields()">
+                            <div class="user-type-card border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-green-500 transition-colors">
+                                <div class="text-center">
+                                    <span class="text-2xl mb-2 block">🏪</span>
+                                    <span class="text-sm font-medium text-gray-700">Retailer</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Common Fields -->
+                <div class="space-y-4">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your email">
+                    </div>
+                    
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input type="password" id="password" name="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your password">
+                    </div>
+                    
+                    <!-- Customer-specific fields -->
+                    <div id="customerFields" class="hidden space-y-4">
+                        <div>
+                            <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your full name">
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your phone number">
+                        </div>
+                        
+                        <div>
+                            <label for="dateOfBirth" class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                            <input type="date" id="dateOfBirth" name="dateOfBirth" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                    </div>
+                    
+                    <!-- Retailer-specific fields -->
+                    <div id="retailerFields" class="hidden space-y-4">
+                        <div>
+                            <label for="businessName" class="block text-sm font-medium text-gray-700 mb-1">Business Name</label>
+                            <input type="text" id="businessName" name="businessName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Enter your business name">
+                        </div>
+                        
+                        <div>
+                            <label for="businessType" class="block text-sm font-medium text-gray-700 mb-1">Business Type</label>
+                            <select id="businessType" name="businessType" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                <option value="">Select business type</option>
+                                <option value="retail">Retail Store</option>
+                                <option value="restaurant">Restaurant</option>
+                                <option value="services">Services</option>
+                                <option value="ecommerce">E-commerce</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="gstNumber" class="block text-sm font-medium text-gray-700 mb-1">GST Number (Optional)</label>
+                            <input type="text" id="gstNumber" name="gstNumber" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Enter GST number">
+                        </div>
+                        
+                        <div>
+                            <label for="businessAddress" class="block text-sm font-medium text-gray-700 mb-1">Business Address</label>
+                            <textarea id="businessAddress" name="businessAddress" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Enter your business address"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:from-purple-600 hover:to-blue-600 transition-colors">
+                        Sign In
+                    </button>
+                </div>
+                
+                <div class="mt-4 text-center">
+                    <p class="text-sm text-gray-600">
+                        Don't have an account? 
+                        <button type="button" class="text-blue-500 hover:text-blue-600 font-medium" onclick="toggleSignUpMode()">Sign up here</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 hidden">
+        <!-- Customer Transactions Section -->
+        <div id="customerTransactions" class="section">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">🛍️ My Purchases & Payments</h2>
+                <p class="text-xl text-gray-600">Track your buy now, pay later transactions</p>
+            </div>
+            
+            <!-- Payment Status Overview -->
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="card-hover bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-6 text-white">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-semibold">Available Credit</h3>
+                            <p class="text-3xl font-bold">₹2,08,500</p>
+                        </div>
+                        <span class="text-4xl">💳</span>
+                    </div>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl p-6 text-white">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-semibold">Pending Payments</h3>
+                            <p class="text-3xl font-bold">₹37,500</p>
+                        </div>
+                        <span class="text-4xl">⏰</span>
+                    </div>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-6 text-white">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-semibold">Next Payment</h3>
+                            <p class="text-xl font-bold">₹12,500 - Dec 15</p>
+                        </div>
+                        <span class="text-4xl">📅</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Transactions -->
+            <div class="bg-white rounded-xl p-6 shadow-lg mb-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Recent Transactions</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-xl">👕</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Fashion Store</h4>
+                                <p class="text-gray-600 text-sm">Dec 1, 2024</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-lg">₹24,900</p>
+                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs">2/4 payments</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-xl">📱</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Tech Gadgets</h4>
+                                <p class="text-gray-600 text-sm">Nov 28, 2024</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-lg">₹49,900</p>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Paid</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-xl">🏠</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Home Decor</h4>
+                                <p class="text-gray-600 text-sm">Nov 25, 2024</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-lg">₹12,500</p>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">1/3 payments</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="w-full mt-6 bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors font-semibold">View All Transactions</button>
+            </div>
+            
+            <!-- Payment Schedule -->
+            <div class="bg-white rounded-xl p-6 shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Upcoming Payments</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 border-l-4 border-red-500 bg-red-50">
+                        <div>
+                            <h4 class="font-semibold text-red-800">Fashion Store Payment</h4>
+                            <p class="text-red-600">Due: December 15, 2024</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-xl text-red-800">₹12,500</p>
+                            <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm">Pay Now</button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 border-l-4 border-yellow-500 bg-yellow-50">
+                        <div>
+                            <h4 class="font-semibold text-yellow-800">Home Decor Payment</h4>
+                            <p class="text-yellow-600">Due: December 25, 2024</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-xl text-yellow-800">₹6,250</p>
+                            <button class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-colors text-sm">Schedule</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Retailer Transactions Section -->
+        <div id="retailerTransactions" class="section hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">🏪 Business Transactions</h2>
+                <p class="text-xl text-gray-600">Manage your sales and customer payments</p>
+            </div>
+            
+            <!-- Business Overview -->
+            <div class="grid md:grid-cols-4 gap-6 mb-8">
+                <div class="card-hover bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-6 text-white">
+                    <div class="text-center">
+                        <h3 class="text-lg font-semibold">Today's Sales</h3>
+                        <p class="text-3xl font-bold">₹2,70,850</p>
+                        <p class="text-sm opacity-90">+12% from yesterday</p>
+                    </div>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-6 text-white">
+                    <div class="text-center">
+                        <h3 class="text-lg font-semibold">Pending Payments</h3>
+                        <p class="text-3xl font-bold">₹7,03,750</p>
+                        <p class="text-sm opacity-90">From 23 customers</p>
+                    </div>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl p-6 text-white">
+                    <div class="text-center">
+                        <h3 class="text-lg font-semibold">Monthly Revenue</h3>
+                        <p class="text-3xl font-bold">₹37,66,600</p>
+                        <p class="text-sm opacity-90">+8% from last month</p>
+                    </div>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl p-6 text-white">
+                    <div class="text-center">
+                        <h3 class="text-lg font-semibold">Active Customers</h3>
+                        <p class="text-3xl font-bold">156</p>
+                        <p class="text-sm opacity-90">+5 new this week</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Sales -->
+            <div class="bg-white rounded-xl p-6 shadow-lg mb-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Recent Sales</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-xl">👤</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Sarah Johnson</h4>
+                                <p class="text-gray-600 text-sm">Dec 5, 2024 - 2:30 PM</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-lg">₹24,900</p>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Pay Later</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-xl">👤</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Mike Chen</h4>
+                                <p class="text-gray-600 text-sm">Dec 5, 2024 - 1:15 PM</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-lg">₹12,500</p>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Paid</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-xl">👤</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Emma Davis</h4>
+                                <p class="text-gray-600 text-sm">Dec 5, 2024 - 11:45 AM</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-lg">₹35,400</p>
+                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs">Installments</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="w-full mt-6 bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors font-semibold">View All Sales</button>
+            </div>
+            
+            <!-- Business Funding Section -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl p-8 text-white">
+                    <h3 class="text-2xl font-bold mb-4">💰 Business Funding</h3>
+                    <p class="mb-6">Get instant funding to grow your business</p>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between">
+                            <span>Available Funding:</span>
+                            <span class="font-bold">₹41,66,500</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Interest Rate:</span>
+                            <span class="font-bold">2.5% monthly</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Approval Time:</span>
+                            <span class="font-bold">24 hours</span>
+                        </div>
+                    </div>
+                    <button class="bg-white text-teal-600 px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors">Apply for Funding</button>
+                </div>
+                
+                <div class="bg-white rounded-xl p-8 shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">🏢 SME Tools</h3>
+                    <div class="space-y-4">
+                        <button class="w-full text-left p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="flex items-center">
+                                <span class="text-2xl mr-4">📊</span>
+                                <div>
+                                    <h4 class="font-semibold">Business Analytics</h4>
+                                    <p class="text-gray-600 text-sm">Track performance metrics</p>
+                                </div>
+                            </div>
+                        </button>
+                        
+                        <button class="w-full text-left p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="flex items-center">
+                                <span class="text-2xl mr-4">💳</span>
+                                <div>
+                                    <h4 class="font-semibold">Payment Processing</h4>
+                                    <p class="text-gray-600 text-sm">Manage payment methods</p>
+                                </div>
+                            </div>
+                        </button>
+                        
+                        <button class="w-full text-left p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="flex items-center">
+                                <span class="text-2xl mr-4">📈</span>
+                                <div>
+                                    <h4 class="font-semibold">Growth Insights</h4>
+                                    <p class="text-gray-600 text-sm">Business growth recommendations</p>
+                                </div>
+                            </div>
+                        </button>
+                        
+                        <button class="w-full text-left p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="flex items-center">
+                                <span class="text-2xl mr-4">🎯</span>
+                                <div>
+                                    <h4 class="font-semibold">Marketing Tools</h4>
+                                    <p class="text-gray-600 text-sm">Promote your business</p>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Women Section -->
+        <div id="women" class="section hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">👩 Women's Financial Empowerment</h2>
+                <p class="text-xl text-gray-600">Breaking barriers, building financial independence for every Indian woman</p>
+                <div class="bg-pink-100 rounded-lg p-4 mt-4 inline-block">
+                    <p class="text-pink-800 font-semibold">🎯 60% of our users are women | 🏘️ Serving rural & urban areas</p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="card-hover bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl p-8 text-white">
+                    <h3 class="text-2xl font-bold mb-4">💪 Financial Independence</h3>
+                    <p class="mb-4">Build your path to financial freedom with personalized strategies</p>
+                    <ul class="text-sm space-y-2 mb-6">
+                        <li class="flex items-center"><span class="mr-2">✓</span>Zero minimum balance accounts</li>
+                        <li class="flex items-center"><span class="mr-2">✓</span>Micro-loans for small businesses</li>
+                        <li class="flex items-center"><span class="mr-2">✓</span>Digital literacy programs</li>
+                    </ul>
+                    <button class="bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">Start Your Journey</button>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-r from-teal-500 to-cyan-600 rounded-xl p-8 text-white">
+                    <h3 class="text-2xl font-bold mb-4">👥 Community Support</h3>
+                    <p class="mb-4">Connect with like-minded women on their financial journey</p>
+                    <ul class="text-sm space-y-2 mb-6">
+                        <li class="flex items-center"><span class="mr-2">✓</span>Women-only financial groups</li>
+                        <li class="flex items-center"><span class="mr-2">✓</span>Mentorship programs</li>
+                        <li class="flex items-center"><span class="mr-2">✓</span>Local language support</li>
+                    </ul>
+                    <button class="bg-white text-cyan-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">Join Community</button>
+                </div>
+            </div>
+            
+            <!-- Financial Inclusion for Women -->
+            <div class="bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl p-8 mb-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">🌟 Inclusive Programs for Every Woman</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="text-4xl mb-3">🏘️</div>
+                        <h4 class="font-bold text-gray-800 mb-2">Rural Women</h4>
+                        <p class="text-sm text-gray-600">Self-help group integration and agricultural finance</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-3">👩‍💼</div>
+                        <h4 class="font-bold text-gray-800 mb-2">Working Women</h4>
+                        <p class="text-sm text-gray-600">Salary advances and career development loans</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-3">🏠</div>
+                        <h4 class="font-bold text-gray-800 mb-2">Homemakers</h4>
+                        <p class="text-sm text-gray-600">Home-based business funding and family savings</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-3">🎓</div>
+                        <h4 class="font-bold text-gray-800 mb-2">Students</h4>
+                        <p class="text-sm text-gray-600">Education loans and skill development funding</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 bg-white rounded-xl p-6 shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">🎯 Featured Resources</h3>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="text-center p-4 bg-pink-50 rounded-lg">
+                        <span class="text-3xl mb-2 block">💼</span>
+                        <h4 class="font-semibold">Career Growth</h4>
+                        <p class="text-xs text-gray-600 mt-1">Available in Hindi, Tamil, Bengali</p>
+                    </div>
+                    <div class="text-center p-4 bg-purple-50 rounded-lg">
+                        <span class="text-3xl mb-2 block">🏠</span>
+                        <h4 class="font-semibold">Home Buying</h4>
+                        <p class="text-xs text-gray-600 mt-1">Low-interest housing loans</p>
+                    </div>
+                    <div class="text-center p-4 bg-teal-50 rounded-lg">
+                        <span class="text-3xl mb-2 block">📈</span>
+                        <h4 class="font-semibold">Investment Tips</h4>
+                        <p class="text-xs text-gray-600 mt-1">Start with just ₹100</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learn Section -->
+        <div id="learn" class="section hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">📚 Financial Learning Center</h2>
+                <p class="text-xl text-gray-600">Expand your financial knowledge with interactive lessons</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="card-hover bg-white rounded-xl p-6 shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <span class="text-3xl mr-4">🎓</span>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-800">Beginner's Guide</h3>
+                                <p class="text-gray-600">Start your financial education journey</p>
+                            </div>
+                        </div>
+                        <div class="bg-green-200 rounded-full h-2 mb-4">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 75%"></div>
+                        </div>
+                        <button class="text-green-600 font-semibold hover:text-green-700">Continue Learning →</button>
+                    </div>
+                    
+                    <div class="card-hover bg-white rounded-xl p-6 shadow-lg">
+                        <div class="flex items-center mb-4">
+                            <span class="text-3xl mr-4">💡</span>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-800">Investment Basics</h3>
+                                <p class="text-gray-600">Learn the fundamentals of investing</p>
+                            </div>
+                        </div>
+                        <div class="bg-blue-200 rounded-full h-2 mb-4">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: 45%"></div>
+                        </div>
+                        <button class="text-blue-600 font-semibold hover:text-blue-700">Start Course →</button>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl p-8 text-white">
+                    <h3 class="text-2xl font-bold mb-4">🏆 Achievement Center</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-3">🥇</span>
+                            <span>Budget Master - Completed!</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-3">🥈</span>
+                            <span>Savings Champion - In Progress</span>
+                        </div>
+                        <div class="flex items-center opacity-50">
+                            <span class="text-2xl mr-3">🥉</span>
+                            <span>Investment Pro - Locked</span>
+                        </div>
+                    </div>
+                    <button class="mt-6 bg-white text-orange-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">View All Achievements</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chatbot Section -->
+        <div id="chatbot" class="section hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">🤖 FinBot - Your Financial Assistant</h2>
+                <p class="text-xl text-gray-600">Get instant answers to all your financial questions</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <!-- Chat Container -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <!-- Chat Header -->
+                    <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-4">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-2xl">🤖</span>
+                            </div>
+                            <div class="text-white">
+                                <h3 class="text-xl font-bold">FinBot</h3>
+                                <p class="text-sm opacity-90">Online • Ready to help with financial questions</p>
+                            </div>
+                            <div class="ml-auto">
+                                <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Messages -->
+                    <div id="chatMessages" class="h-96 overflow-y-auto p-6 bg-gray-50">
+                        <!-- Welcome Message -->
+                        <div class="flex items-start mb-4">
+                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                <span class="text-lg">🤖</span>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 shadow-sm max-w-xs">
+                                <p class="text-gray-800">Hi! I'm FinBot, your personal financial assistant! 👋</p>
+                                <p class="text-gray-800 mt-2">I can help you with:</p>
+                                <ul class="text-sm text-gray-600 mt-2 space-y-1">
+                                    <li>• Buy now, pay later questions</li>
+                                    <li>• Investment advice</li>
+                                    <li>• Budgeting tips</li>
+                                    <li>• Business funding info</li>
+                                    <li>• Financial education</li>
+                                </ul>
+                                <p class="text-gray-800 mt-2">What would you like to know? 😊</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Questions -->
+                    <div class="p-4 bg-white border-t">
+                        <p class="text-sm text-gray-600 mb-3">Quick questions:</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <button onclick="askQuickQuestion('How does buy now, pay later work?')" class="bg-blue-100 text-blue-800 px-3 py-2 rounded-full text-sm hover:bg-blue-200 transition-colors">
+                                How does BNPL work? 💳
+                            </button>
+                            <button onclick="askQuickQuestion('What are the best investment options for beginners?')" class="bg-green-100 text-green-800 px-3 py-2 rounded-full text-sm hover:bg-green-200 transition-colors">
+                                Investment tips 📈
+                            </button>
+                            <button onclick="askQuickQuestion('How can I improve my credit score?')" class="bg-purple-100 text-purple-800 px-3 py-2 rounded-full text-sm hover:bg-purple-200 transition-colors">
+                                Credit score help 🎯
+                            </button>
+                            <button onclick="askQuickQuestion('What business funding options are available?')" class="bg-orange-100 text-orange-800 px-3 py-2 rounded-full text-sm hover:bg-orange-200 transition-colors">
+                                Business funding 🏪
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Input -->
+                    <div class="p-4 bg-white border-t">
+                        <div class="flex space-x-3">
+                            <input 
+                                type="text" 
+                                id="chatInput" 
+                                placeholder="Ask me anything about finance..." 
+                                class="flex-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                onkeypress="handleChatKeyPress(event)"
+                            >
+                            <button 
+                                onclick="sendMessage()" 
+                                class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors font-semibold"
+                            >
+                                Send 📤
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chat Features -->
+                <div class="grid md:grid-cols-3 gap-6 mt-8">
+                    <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                        <div class="text-4xl mb-4">⚡</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Instant Responses</h3>
+                        <p class="text-gray-600">Get immediate answers to your financial questions 24/7</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                        <div class="text-4xl mb-4">🎯</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Personalized Advice</h3>
+                        <p class="text-gray-600">Tailored financial guidance based on your specific needs</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                        <div class="text-4xl mb-4">🔒</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Secure & Private</h3>
+                        <p class="text-gray-600">Your financial conversations are completely confidential</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Budget Planner Section (Retailer) -->
+        <div id="budget" class="section hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">📊 Budget Planner</h2>
+                <p class="text-xl text-gray-600">Plan and track your business finances</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Monthly Budget Overview</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-4 bg-green-50 rounded-lg">
+                            <span class="font-semibold text-green-800">Revenue</span>
+                            <span class="text-2xl font-bold text-green-600">₹5,00,000</span>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-red-50 rounded-lg">
+                            <span class="font-semibold text-red-800">Expenses</span>
+                            <span class="text-2xl font-bold text-red-600">₹3,50,000</span>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
+                            <span class="font-semibold text-blue-800">Net Profit</span>
+                            <span class="text-2xl font-bold text-blue-600">₹1,50,000</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Expense Breakdown</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Inventory</span>
+                            <div class="flex items-center">
+                                <div class="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 60%"></div>
+                                </div>
+                                <span class="font-semibold">₹2,10,000</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Rent</span>
+                            <div class="flex items-center">
+                                <div class="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 20%"></div>
+                                </div>
+                                <span class="font-semibold">₹70,000</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Staff Salaries</span>
+                            <div class="flex items-center">
+                                <div class="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                                    <div class="bg-purple-500 h-2 rounded-full" style="width: 15%"></div>
+                                </div>
+                                <span class="font-semibold">₹52,500</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Utilities</span>
+                            <div class="flex items-center">
+                                <div class="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 5%"></div>
+                                </div>
+                                <span class="font-semibold">₹17,500</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fund Finder Section (Retailer) -->
+        <div id="funding" class="section hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">💰 Fund Finder</h2>
+                <p class="text-xl text-gray-600">Discover funding opportunities for your business</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card-hover bg-gradient-to-br from-green-500 to-teal-600 rounded-xl p-6 text-white">
+                    <h3 class="text-xl font-bold mb-4">💳 Working Capital</h3>
+                    <p class="mb-4">Quick funding for daily operations</p>
+                    <div class="space-y-2 text-sm mb-4">
+                        <div>Amount: Up to ₹50 Lakhs</div>
+                        <div>Interest: 1.5% per month</div>
+                        <div>Tenure: 6-24 months</div>
+                    </div>
+                    <button class="bg-white text-teal-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">Apply Now</button>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-6 text-white">
+                    <h3 class="text-xl font-bold mb-4">🏪 Equipment Loan</h3>
+                    <p class="mb-4">Finance new equipment and machinery</p>
+                    <div class="space-y-2 text-sm mb-4">
+                        <div>Amount: Up to ₹1 Crore</div>
+                        <div>Interest: 12% per annum</div>
+                        <div>Tenure: 3-7 years</div>
+                    </div>
+                    <button class="bg-white text-purple-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">Apply Now</button>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-br from-orange-500 to-red-600 rounded-xl p-6 text-white">
+                    <h3 class="text-xl font-bold mb-4">📈 Growth Capital</h3>
+                    <p class="mb-4">Scale your business to new heights</p>
+                    <div class="space-y-2 text-sm mb-4">
+                        <div>Amount: ₹10 Lakhs - ₹5 Crores</div>
+                        <div>Interest: 14% per annum</div>
+                        <div>Tenure: 2-5 years</div>
+                    </div>
+                    <button class="bg-white text-red-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">Apply Now</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tax Calculator Section (Retailer) -->
+        <div id="tax" class="section hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">🧮 Tax Calculator</h2>
+                <p class="text-xl text-gray-600">Calculate your business taxes accurately</p>
+            </div>
+            
+            <div class="max-w-2xl mx-auto bg-white rounded-xl p-8 shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">GST Calculator</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Transaction Amount (₹)</label>
+                        <input type="number" id="taxAmount" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Enter amount" oninput="calculateTax()">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">GST Rate (%)</label>
+                        <select id="gstRate" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" onchange="calculateTax()">
+                            <option value="5">5% - Essential goods</option>
+                            <option value="12">12% - Standard goods</option>
+                            <option value="18" selected>18% - Most goods & services</option>
+                            <option value="28">28% - Luxury goods</option>
+                        </select>
+                    </div>
+                    
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="flex justify-between mb-2">
+                            <span>Base Amount:</span>
+                            <span id="baseAmount">₹0.00</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span>GST Amount:</span>
+                            <span id="gstAmount">₹0.00</span>
+                        </div>
+                        <div class="flex justify-between font-bold text-lg border-t pt-2">
+                            <span>Total Amount:</span>
+                            <span id="totalAmount">₹0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategic Planning Section (Retailer) -->
+        <div id="strategic" class="section hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">📈 Strategic Planning</h2>
+                <p class="text-xl text-gray-600">Plan your business growth strategy</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Business Goals</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-semibold text-blue-800 mb-2">Q1 2024 Target</h4>
+                            <p class="text-blue-600 mb-2">Increase revenue by 25%</p>
+                            <div class="w-full bg-blue-200 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 75%"></div>
+                            </div>
+                            <p class="text-sm text-blue-600 mt-1">75% Complete</p>
+                        </div>
+                        
+                        <div class="p-4 bg-green-50 rounded-lg">
+                            <h4 class="font-semibold text-green-800 mb-2">Customer Acquisition</h4>
+                            <p class="text-green-600 mb-2">Add 500 new customers</p>
+                            <div class="w-full bg-green-200 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: 60%"></div>
+                            </div>
+                            <p class="text-sm text-green-600 mt-1">300 customers added</p>
+                        </div>
+                        
+                        <div class="p-4 bg-purple-50 rounded-lg">
+                            <h4 class="font-semibold text-purple-800 mb-2">Market Expansion</h4>
+                            <p class="text-purple-600 mb-2">Open 2 new locations</p>
+                            <div class="w-full bg-purple-200 rounded-full h-2">
+                                <div class="bg-purple-500 h-2 rounded-full" style="width: 50%"></div>
+                            </div>
+                            <p class="text-sm text-purple-600 mt-1">1 location opened</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Growth Recommendations</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start p-4 bg-yellow-50 rounded-lg">
+                            <span class="text-2xl mr-3">💡</span>
+                            <div>
+                                <h4 class="font-semibold text-yellow-800">Digital Marketing</h4>
+                                <p class="text-yellow-600 text-sm">Invest in social media advertising to reach younger demographics</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start p-4 bg-teal-50 rounded-lg">
+                            <span class="text-2xl mr-3">📱</span>
+                            <div>
+                                <h4 class="font-semibold text-teal-800">Mobile App</h4>
+                                <p class="text-teal-600 text-sm">Develop a mobile app to improve customer engagement</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start p-4 bg-pink-50 rounded-lg">
+                            <span class="text-2xl mr-3">🤝</span>
+                            <div>
+                                <h4 class="font-semibold text-pink-800">Partnerships</h4>
+                                <p class="text-pink-600 text-sm">Form strategic partnerships with complementary businesses</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start p-4 bg-indigo-50 rounded-lg">
+                            <span class="text-2xl mr-3">📊</span>
+                            <div>
+                                <h4 class="font-semibold text-indigo-800">Data Analytics</h4>
+                                <p class="text-indigo-600 text-sm">Implement advanced analytics to understand customer behavior</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Children Section -->
+        <div id="children" class="section hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">👶 Kids Financial Education</h2>
+                <p class="text-xl text-gray-600">Teaching financial literacy to the next generation</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card-hover bg-gradient-to-br from-green-400 to-blue-500 rounded-xl p-6 text-white">
+                    <div class="text-center">
+                        <span class="text-5xl mb-4 block">🐷</span>
+                        <h3 class="text-xl font-bold mb-2">Piggy Bank Challenge</h3>
+                        <p class="mb-4">Fun saving games for kids</p>
+                        <button class="bg-white text-blue-500 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">Play Now</button>
+                    </div>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl p-6 text-white">
+                    <div class="text-center">
+                        <span class="text-5xl mb-4 block">🎮</span>
+                        <h3 class="text-xl font-bold mb-2">Money Games</h3>
+                        <p class="mb-4">Interactive learning through play</p>
+                        <button class="bg-white text-pink-500 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">Start Playing</button>
+                    </div>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-br from-yellow-400 to-red-500 rounded-xl p-6 text-white">
+                    <div class="text-center">
+                        <span class="text-5xl mb-4 block">📖</span>
+                        <h3 class="text-xl font-bold mb-2">Story Time</h3>
+                        <p class="mb-4">Financial stories for children</p>
+                        <button class="bg-white text-red-500 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">Read Stories</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Investment Section for Kids -->
+            <div class="mt-8 bg-gradient-to-br from-green-50 to-blue-50 rounded-xl p-8 shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">🌱 My Investment Tree</h3>
+                
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <!-- Tree Visualization -->
+                    <div class="text-center">
+                        <div class="relative bg-sky-100 rounded-xl p-8 h-80 flex items-end justify-center">
+                            <!-- Tree Growth Stages -->
+                            <div id="treeStage" class="transition-all duration-1000">
+                                <!-- Stage 1: Seed (Week 1) -->
+                                <div id="stage1" class="tree-stage">
+                                    <div class="text-6xl">🌱</div>
+                                    <p class="text-sm font-semibold text-green-700 mt-2">Week 1: ₹833.00</p>
+                                </div>
+                                
+                                <!-- Stage 2: Small Plant (Week 2) -->
+                                <div id="stage2" class="tree-stage hidden">
+                                    <div class="text-7xl">🌿</div>
+                                    <p class="text-sm font-semibold text-green-700 mt-2">Week 2: ₹874.65</p>
+                                </div>
+                                
+                                <!-- Stage 3: Growing Tree (Week 3) -->
+                                <div id="stage3" class="tree-stage hidden">
+                                    <div class="text-8xl">🌳</div>
+                                    <p class="text-sm font-semibold text-green-700 mt-2">Week 3: ₹918.00</p>
+                                </div>
+                                
+                                <!-- Stage 4: Full Tree with Fruits (Week 4+) -->
+                                <div id="stage4" class="tree-stage hidden">
+                                    <div class="text-8xl relative">
+                                        🌳
+                                        <span class="absolute -top-2 -right-2 text-2xl">🍎</span>
+                                        <span class="absolute top-4 -left-2 text-2xl">🍎</span>
+                                    </div>
+                                    <p class="text-sm font-semibold text-green-700 mt-2">Week 4: ₹963.90</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Growth Sparkles -->
+                            <div class="absolute top-4 left-4 text-2xl animate-pulse">✨</div>
+                            <div class="absolute top-8 right-6 text-xl animate-pulse" style="animation-delay: 0.5s">⭐</div>
+                            <div class="absolute bottom-20 left-8 text-lg animate-pulse" style="animation-delay: 1s">💫</div>
+                        </div>
+                        
+                        <div class="mt-4 flex justify-center space-x-2">
+                            <button onclick="previousWeek()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">← Previous Week</button>
+                            <button onclick="nextWeek()" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors">Next Week →</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Investment Controls -->
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-xl p-6 shadow-md">
+                            <h4 class="text-xl font-bold text-gray-800 mb-4">💰 My Investment Pot</h4>
+                            <div class="text-center mb-4">
+                                <div class="text-4xl font-bold text-green-600" id="currentAmount">₹833.00</div>
+                                <p class="text-gray-600">Current Value</p>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Initial Investment:</span>
+                                    <span class="font-semibold">₹833.00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Growth This Week:</span>
+                                    <span class="font-semibold text-green-600" id="weeklyGrowth">+₹0.00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Total Growth:</span>
+                                    <span class="font-semibold text-green-600" id="totalGrowth">+₹0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Parental Control Section -->
+                        <div class="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-6">
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">👨‍👩‍👧‍👦 Parent Controls</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">Investment Approved:</span>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold">✓ Yes</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">Weekly Limit:</span>
+                                    <span class="text-sm font-semibold">₹1,666.00</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">Risk Level:</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-semibold">Low Risk</span>
+                                </div>
+                            </div>
+                            <button class="w-full mt-4 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors text-sm font-semibold">Request Parent Permission</button>
+                        </div>
+                        
+                        <!-- Investment Actions -->
+                        <div class="bg-white rounded-xl p-6 shadow-md">
+                            <h4 class="text-lg font-bold text-gray-800 mb-4">🎯 Investment Actions</h4>
+                            <div class="space-y-3">
+                                <button onclick="addMoney()" class="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors font-semibold">
+                                    🌱 Add More Money to Tree
+                                </button>
+                                <button onclick="learnInvesting()" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors font-semibold">
+                                    📚 Learn About Investing
+                                </button>
+                                <button onclick="shareProgress()" class="w-full bg-purple-500 text-white py-3 rounded-lg hover:bg-purple-600 transition-colors font-semibold">
+                                    📱 Share My Tree Growth
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 bg-white rounded-xl p-8 shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">🎯 Learning Progress</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-2">Counting Money</h4>
+                        <div class="bg-gray-200 rounded-full h-3">
+                            <div class="bg-green-500 h-3 rounded-full" style="width: 90%"></div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">90% Complete</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-2">Saving Basics</h4>
+                        <div class="bg-gray-200 rounded-full h-3">
+                            <div class="bg-blue-500 h-3 rounded-full" style="width: 60%"></div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">60% Complete</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-2">Investment Basics</h4>
+                        <div class="bg-gray-200 rounded-full h-3">
+                            <div class="bg-purple-500 h-3 rounded-full" style="width: 25%"></div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">25% Complete</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentUserType = null;
+        let currentPage = 'landing'; // 'landing', 'signIn', 'main'
+        let isSignUpMode = false;
+        
+        function showLandingPage() {
+            currentPage = 'landing';
+            document.getElementById('landingPage').classList.remove('hidden');
+            document.getElementById('signInForm').classList.add('hidden');
+            document.getElementById('mainContent').classList.add('hidden');
+            
+            // Update navigation
+            document.getElementById('mainNavigation').classList.add('hidden');
+            document.getElementById('landingNavigation').classList.remove('hidden');
+            document.getElementById('mainMobileMenu').classList.add('hidden');
+            document.getElementById('landingMobileMenu').classList.remove('hidden');
+        }
+        
+        function showSignInForm() {
+            currentPage = 'signIn';
+            document.getElementById('landingPage').classList.add('hidden');
+            document.getElementById('signInForm').classList.remove('hidden');
+            document.getElementById('mainContent').classList.add('hidden');
+            
+            // Hide navigation items for sign in
+            document.getElementById('mainNavigation').classList.add('hidden');
+            document.getElementById('landingNavigation').classList.add('hidden');
+            document.getElementById('mobileMenu').classList.add('hidden');
+        }
+        
+        function updateFormFields() {
+            const userType = document.querySelector('input[name="userType"]:checked')?.value;
+            const customerFields = document.getElementById('customerFields');
+            const retailerFields = document.getElementById('retailerFields');
+            
+            // Update card styling
+            document.querySelectorAll('.user-type-card').forEach(card => {
+                card.classList.remove('border-blue-500', 'border-green-500', 'bg-blue-50', 'bg-green-50');
+                card.classList.add('border-gray-200');
+            });
+            
+            if (userType === 'customer') {
+                customerFields.classList.remove('hidden');
+                retailerFields.classList.add('hidden');
+                document.querySelector('input[value="customer"]').parentElement.querySelector('.user-type-card').classList.add('border-blue-500', 'bg-blue-50');
+            } else if (userType === 'retailer') {
+                customerFields.classList.add('hidden');
+                retailerFields.classList.remove('hidden');
+                document.querySelector('input[value="retailer"]').parentElement.querySelector('.user-type-card').classList.add('border-green-500', 'bg-green-50');
+            } else {
+                customerFields.classList.add('hidden');
+                retailerFields.classList.add('hidden');
+            }
+        }
+        
+        function toggleSignUpMode() {
+            isSignUpMode = !isSignUpMode;
+            const formTitle = document.querySelector('#signInForm h2');
+            const formSubtitle = document.querySelector('#signInForm p');
+            const submitButton = document.querySelector('#signInForm button[type="submit"]');
+            const toggleText = document.querySelector('#signInForm .text-blue-500');
+            
+            if (isSignUpMode) {
+                formTitle.textContent = 'Create Your Account!';
+                formSubtitle.textContent = 'Join Finbuddy today';
+                submitButton.textContent = 'Sign Up';
+                toggleText.textContent = 'Already have an account? Sign in here';
+            } else {
+                formTitle.textContent = 'Welcome to Finbuddy!';
+                formSubtitle.textContent = 'Sign in to your account';
+                submitButton.textContent = 'Sign In';
+                toggleText.textContent = 'Don\'t have an account? Sign up here';
+            }
+        }
+        
+        function handleSignIn(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const userType = formData.get('userType');
+            
+            if (!userType) {
+                showNotification('Please select whether you are a Customer or Retailer! 👆');
+                return;
+            }
+            
+            currentUserType = userType;
+            currentPage = 'main';
+            
+            // Hide sign in form and show main content
+            document.getElementById('signInForm').classList.add('hidden');
+            document.getElementById('mainContent').classList.remove('hidden');
+            
+            // Show main navigation
+            document.getElementById('mainNavigation').classList.remove('hidden');
+            document.getElementById('landingNavigation').classList.add('hidden');
+            document.getElementById('mainMobileMenu').classList.remove('hidden');
+            document.getElementById('landingMobileMenu').classList.add('hidden');
+            
+            // Show appropriate navigation and sections based on user type
+            updateNavigationForUserType(userType);
+            
+            // Show appropriate transaction section based on user type
+            if (userType === 'customer') {
+                showSection('transactions');
+            } else if (userType === 'retailer') {
+                showSection('transactions');
+            }
+            
+            // Welcome message
+            const userName = formData.get('fullName') || formData.get('businessName') || 'User';
+            showNotification(`Welcome to Finbuddy, ${userName}! 🎉`);
+        }
+        
+        function updateNavigationForUserType(userType) {
+            const customerNav = document.getElementById('customerNav');
+            const retailerNav = document.getElementById('retailerNav');
+            const customerMobileMenu = document.getElementById('customerMobileMenu');
+            const retailerMobileMenu = document.getElementById('retailerMobileMenu');
+            
+            if (userType === 'customer') {
+                customerNav.classList.remove('hidden');
+                retailerNav.classList.add('hidden');
+                customerMobileMenu.classList.remove('hidden');
+                retailerMobileMenu.classList.add('hidden');
+            } else if (userType === 'retailer') {
+                customerNav.classList.add('hidden');
+                retailerNav.classList.remove('hidden');
+                customerMobileMenu.classList.add('hidden');
+                retailerMobileMenu.classList.remove('hidden');
+            }
+        }
+        
+        // Tax Calculator Function
+        function calculateTax() {
+            const amount = parseFloat(document.getElementById('taxAmount').value) || 0;
+            const gstRate = parseFloat(document.getElementById('gstRate').value) || 18;
+            
+            const baseAmount = amount / (1 + gstRate / 100);
+            const gstAmount = amount - baseAmount;
+            
+            document.getElementById('baseAmount').textContent = `₹${baseAmount.toFixed(2)}`;
+            document.getElementById('gstAmount').textContent = `₹${gstAmount.toFixed(2)}`;
+            document.getElementById('totalAmount').textContent = `₹${amount.toFixed(2)}`;
+        }
+        
+        function showSection(sectionName) {
+            // If we're on landing page, go to user selection first
+            if (currentPage === 'landing') {
+                showUserTypeSelection();
+                return;
+            }
+            
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.add('hidden'));
+            
+            // Show appropriate section based on user type and section name
+            if (sectionName === 'transactions') {
+                if (currentUserType === 'customer') {
+                    document.getElementById('customerTransactions').classList.remove('hidden');
+                } else if (currentUserType === 'retailer') {
+                    document.getElementById('retailerTransactions').classList.remove('hidden');
+                }
+            } else {
+                // Show selected section
+                document.getElementById(sectionName).classList.remove('hidden');
+            }
+            
+            // Update active nav item
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            
+            // Find and activate the clicked nav item
+            const clickedItem = event?.target?.closest('.nav-item');
+            if (clickedItem) {
+                clickedItem.classList.add('active');
+            }
+            
+            // Close mobile menu if open
+            document.getElementById('mobileMenu').classList.add('hidden');
+        }
+        
+        // Chatbot Functions
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                addUserMessage(message);
+                input.value = '';
+                
+                // Simulate bot response after a short delay
+                setTimeout(() => {
+                    addBotResponse(message);
+                }, 1000);
+            }
+        }
+        
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        function askQuickQuestion(question) {
+            addUserMessage(question);
+            setTimeout(() => {
+                addBotResponse(question);
+            }, 1000);
+        }
+        
+        function addUserMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex items-start mb-4 justify-end';
+            messageDiv.innerHTML = `
+                <div class="bg-blue-500 text-white rounded-lg p-4 shadow-sm max-w-xs">
+                    <p>${message}</p>
+                </div>
+                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center ml-3 flex-shrink-0">
+                    <span class="text-lg">👤</span>
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function addBotResponse(userMessage) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex items-start mb-4';
+            
+            // Generate response based on user message
+            const response = generateBotResponse(userMessage);
+            
+            messageDiv.innerHTML = `
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                    <span class="text-lg">🤖</span>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow-sm max-w-xs">
+                    <p class="text-gray-800">${response}</p>
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function generateBotResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            
+            if (message.includes('buy now') || message.includes('pay later') || message.includes('bnpl')) {
+                return "Buy Now, Pay Later (BNPL) lets you purchase items immediately and pay in installments! 💳 With Finbuddy, you can split payments into 3-4 parts with no interest if paid on time. It's perfect for managing cash flow while getting what you need today! 😊";
+            }
+            
+            if (message.includes('investment') || message.includes('invest')) {
+                return "Great question about investing! 📈 For beginners, I recommend starting with diversified index funds, which spread risk across many companies. Consider your risk tolerance and time horizon. Finbuddy offers educational resources and even has a fun investment tree game for kids! 🌱";
+            }
+            
+            if (message.includes('credit score') || message.includes('credit')) {
+                return "Improving your credit score takes time but it's worth it! 🎯 Key tips: Pay bills on time, keep credit utilization below 30%, don't close old accounts, and check your credit report regularly. Using BNPL responsibly through Finbuddy can also help build positive payment history! ✨";
+            }
+            
+            if (message.includes('business') || message.includes('funding')) {
+                return "Finbuddy offers excellent business funding options! 🏪 We provide up to $50K with 24-hour approval, competitive rates starting at 2.5% monthly, and include SME tools for analytics, payment processing, and growth insights. Perfect for expanding your business! 🚀";
+            }
+            
+            if (message.includes('budget') || message.includes('save')) {
+                return "Smart budgeting is key to financial success! 💰 Try the 50/30/20 rule: 50% for needs, 30% for wants, 20% for savings. Track your spending, set realistic goals, and automate savings. Finbuddy's analytics can help you understand your spending patterns! 📊";
+            }
+            
+            if (message.includes('women') || message.includes('female')) {
+                return "Finbuddy is committed to women's financial empowerment! 👩‍💼 We offer specialized resources for financial independence, career growth support, investment guidance, and a supportive community. Women face unique financial challenges, and we're here to help overcome them! 💪";
+            }
+            
+            if (message.includes('children') || message.includes('kids') || message.includes('child')) {
+                return "Teaching kids about money is so important! 👶 Finbuddy's kids section includes fun games, the investment tree simulator, educational stories, and parental controls. It's never too early to start building good financial habits! 🎮📚";
+            }
+            
+            if (message.includes('help') || message.includes('support')) {
+                return "I'm here to help with all your financial questions! 🤝 I can assist with BNPL, investments, budgeting, business funding, credit scores, and more. Feel free to ask specific questions or use the quick question buttons above! 😊";
+            }
+            
+            // Default response
+            return "That's a great financial question! 🤔 While I'd love to give you a detailed answer, I recommend speaking with one of our financial advisors for personalized guidance. In the meantime, you can explore our learning center or try asking about specific topics like investments, budgeting, or BNPL! 💡";
+        }
+        
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+            // Close mobile menu if open
+            document.getElementById('mobileMenu').classList.add('hidden');
+        }
+        
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        }
+        
+        // Investment Tree Functionality
+        let currentWeek = 1;
+        const maxWeeks = 4;
+        const investmentData = [
+            { week: 1, amount: 833.00, growth: 0.00, stage: 'stage1' },
+            { week: 2, amount: 874.65, growth: 41.65, stage: 'stage2' },
+            { week: 3, amount: 918.00, growth: 43.35, stage: 'stage3' },
+            { week: 4, amount: 963.90, growth: 45.90, stage: 'stage4' }
+        ];
+        
+        function updateTreeDisplay() {
+            const data = investmentData[currentWeek - 1];
+            
+            // Hide all stages
+            document.querySelectorAll('.tree-stage').forEach(stage => {
+                stage.classList.add('hidden');
+            });
+            
+            // Show current stage
+            document.getElementById(data.stage).classList.remove('hidden');
+            
+            // Update financial information
+            document.getElementById('currentAmount').textContent = `₹${data.amount.toFixed(2)}`;
+            document.getElementById('weeklyGrowth').textContent = `+₹${data.growth.toFixed(2)}`;
+            document.getElementById('totalGrowth').textContent = `+₹${(data.amount - 833.00).toFixed(2)}`;
+        }
+        
+        function nextWeek() {
+            if (currentWeek < maxWeeks) {
+                currentWeek++;
+                updateTreeDisplay();
+                showNotification("Your tree is growing! 🌱✨");
+            } else {
+                showNotification("Your tree is fully grown! 🌳🍎");
+            }
+        }
+        
+        function previousWeek() {
+            if (currentWeek > 1) {
+                currentWeek--;
+                updateTreeDisplay();
+                showNotification("Looking back at your tree's growth! 📈");
+            } else {
+                showNotification("This is where your investment journey began! 🌱");
+            }
+        }
+        
+        function addMoney() {
+            showNotification("Parent approval needed to add more money! 👨‍👩‍👧‍👦");
+        }
+        
+        function learnInvesting() {
+            showNotification("Let's learn about making money grow! 📚💡");
+        }
+        
+        function shareProgress() {
+            showNotification("Look how much my investment tree has grown! 🌳📱");
+        }
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.className = 'fixed top-20 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-all duration-300';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        // Language and Theme Functions
+        let currentLang = 'en';
+        let isDarkMode = false;
+        
+        const languages = {
+            en: { code: 'EN', name: 'English' },
+            hi: { code: 'हि', name: 'हिंदी' },
+            ta: { code: 'த', name: 'தமிழ்' },
+            te: { code: 'తె', name: 'తెలుగు' },
+            bn: { code: 'বা', name: 'বাংলা' },
+            mr: { code: 'म', name: 'मराठी' }
+        };
+        
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('languageDropdown');
+            dropdown.classList.toggle('hidden');
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function closeDropdown(e) {
+                if (!e.target.closest('#languageButton') && !e.target.closest('#languageDropdown')) {
+                    dropdown.classList.add('hidden');
+                    document.removeEventListener('click', closeDropdown);
+                }
+            });
+        }
+        
+        function changeLanguage(langCode) {
+            currentLang = langCode;
+            const lang = languages[langCode];
+            
+            // Update all language displays
+            document.getElementById('currentLanguage').textContent = lang.code;
+            document.getElementById('currentLanguageLanding').textContent = lang.code;
+            document.getElementById('currentLanguageMobile').textContent = lang.name;
+            document.getElementById('currentLanguageMobileLanding').textContent = lang.name;
+            
+            // Hide dropdown
+            document.getElementById('languageDropdown').classList.add('hidden');
+            
+            // Show notification
+            showNotification(`Language changed to ${lang.name}! 🌐`);
+            
+            // Save language preference
+            localStorage.setItem('language', langCode);
+            
+            // In a real app, this would trigger translation
+            console.log(`Language changed to: ${langCode}`);
+        }
+        
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            const body = document.body;
+            
+            if (isDarkMode) {
+                body.classList.add('dark');
+                // Update all dark mode icons
+                document.getElementById('darkModeIcon').textContent = '☀️';
+                document.getElementById('darkModeIconLanding').textContent = '☀️';
+                document.getElementById('darkModeIconMobile').textContent = '☀️';
+                document.getElementById('darkModeIconMobileLanding').textContent = '☀️';
+                showNotification('Dark mode enabled! 🌙');
+            } else {
+                body.classList.remove('dark');
+                // Update all dark mode icons
+                document.getElementById('darkModeIcon').textContent = '🌙';
+                document.getElementById('darkModeIconLanding').textContent = '🌙';
+                document.getElementById('darkModeIconMobile').textContent = '🌙';
+                document.getElementById('darkModeIconMobileLanding').textContent = '🌙';
+                showNotification('Light mode enabled! ☀️');
+            }
+            
+            // Save preference to localStorage
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+        
+        function loadUserPreferences() {
+            // Load dark mode preference
+            const savedDarkMode = localStorage.getItem('darkMode');
+            if (savedDarkMode === 'true') {
+                toggleDarkMode();
+            }
+            
+            // Load language preference
+            const savedLanguage = localStorage.getItem('language');
+            if (savedLanguage && languages[savedLanguage]) {
+                changeLanguage(savedLanguage);
+            }
+        }
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load user preferences
+            loadUserPreferences();
+            
+            // Start with landing page
+            showLandingPage();
+            
+            // Initialize tree display
+            updateTreeDisplay();
+            
+            // Add click handlers to all buttons to make them interactive
+            const buttons = document.querySelectorAll('button:not(.nav-item):not([onclick])');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Add a fun click effect
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                    
+                    // Show a friendly message
+                    const messages = [
+                        "Great choice! 🎉",
+                        "Coming soon! ✨",
+                        "Awesome! 🚀",
+                        "Nice click! 👍",
+                        "Feature loading... 💫"
+                    ];
+                    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                    showNotification(randomMessage);
+                });
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'962b3d7183f97f5b',t:'MTc1MzEwNjU4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
