@@ -30,7 +30,8 @@ const LandingPage = () => {
                   onClick={showUserTypeSelection}
                   className="bg-yellow-400 text-purple-800 font-bold px-8 py-4 rounded-lg hover:bg-yellow-300 transition-colors text-lg"
                 >
-                  Get Started Free 🎉
+                  <h1 className="text-2xl">Get Started Free 🎉.</h1>
+                  <p className="text-sm">Don't worry it's always free</p>
                 </button>
                 <button
                   onClick={() => scrollToSection('features')}

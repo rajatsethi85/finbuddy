@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContextInstance'; // Adjust the path as needed
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -9,6 +10,7 @@ const Navbar = () => {
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkDevice = () => {
@@ -48,8 +50,8 @@ const Navbar = () => {
     alert(`Navigating to ${section}`);
   };
 
-  const showSignInForm = () => {
-    alert('Showing Sign In Form');
+  const redirect = (path) => {
+    navigate(path); // Adjust the path as needed
   };
 
   return (
@@ -196,21 +198,21 @@ const Navbar = () => {
             {/* Login and Sign Up Buttons */}
             {!isAuthenticated && (
               <div>
-              <button
-              className="bg-white text-purple-800 font-bold px-6 py-2 rounded-lg hover:bg-gray-100 transition-colors"
-              style={{ margin: '10px' }}
-              onClick={showSignInForm}
-            >
-              Login
-            </button>
-            <button
-              className="bg-yellow-400 text-purple-800 font-bold px-6 py-2 rounded-lg hover:bg-yellow-300 transition-colors"
-              style={{ margin: '10px' }}
-              onClick={showSignInForm}
-            >
-              Sign Up
-            </button>
-            </div>)}
+                <button
+                  className="bg-white text-purple-800 font-bold px-6 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                  style={{ margin: '10px' }}
+                  onClick={() => redirect('/login')}
+                >
+                  Login
+                </button>
+                <button
+                  className="bg-yellow-400 text-purple-800 font-bold px-6 py-2 rounded-lg hover:bg-yellow-300 transition-colors"
+                  style={{ margin: '10px' }}
+                  onClick={() =>redirect('/signup')}
+                >
+                  Sign Up
+                </button>
+              </div>)}
           </div>
 
           {/* Mobile Menu Button */}

@@ -7,6 +7,8 @@ import LearningHub from './components/LearningHub';
 import SmeToolkit from './components/SmeToolkit';
 import LandingPage from './components/LandingPage';
 import { AuthProvider } from './context/AuthContext';
+import Login from './components/login';
+import SignUp from './components/Signup';
 
 
 function App() {
@@ -17,8 +19,8 @@ function App() {
       </AuthProvider>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/chatbot" element={<Chatbot />} />
-        <Route path="/learn" element={<LearningHub />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/sme" element={<SmeToolkit />} />
       </Routes>
     </BrowserRouter>
