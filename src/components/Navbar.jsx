@@ -1,58 +1,252 @@
-import { Link } from 'react-router-dom';
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function Navbar() {
+const Navbar = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [language, setLanguage] = useState('EN');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [currentNavigation, setCurrentNavigation] = useState('landing');
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    document.body.classList.toggle('dark', !isDarkMode);
+  };
+
+  const toggleLanguageDropdown = () => {
+    setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
+  };
+
+  const changeLanguage = (lang) => {
+    setLanguage(lang);
+    setIsLanguageDropdownOpen(false);
+    alert(`Language changed to ${lang}`);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const showNavigation = (navigation) => {
+    setCurrentNavigation(navigation);
+  };
+
   return (
-    <nav className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4 shadow-lg">
-      <div className="container flex items-center justify-between">
-        <h1 className="text-2xl font-extrabold tracking-wide hover:scale-105 transition-transform duration-300">
-          FinBuddy
-        </h1>
-        <div className="space-x-6 flex items-center">
-          <Link
-            to="/"
-            className="hover:text-yellow-300 transition-colors duration-300"
+    <nav className="gradient-bg shadow-lg sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <div
+            className="flex items-center space-x-2 cursor-pointer hover:scale-105 transition-transform"
+            onClick={() => showNavigation('landing')}
           >
-            Dashboard
-          </Link>
-          <Link
-            to="/chatbot"
-            className="hover:text-yellow-300 transition-colors duration-300"
+            <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center bounce">
+              <span className="text-2xl">💰</span>
+            </div>
+            <h1 className="text-2xl font-bold text-white">Finbuddy</h1>
+          </div>
+
+          {/* Main Navigation */}
+          <div
+            id="mainNavigation"
+            className={`md:flex items-center space-x-8 ${
+              currentNavigation === 'main' ? 'flex' : 'hidden'
+            }`}
           >
-            AI Coach
-          </Link>
-          <Link
-            to="/learn"
-            className="hover:text-yellow-300 transition-colors duration-300"
+            {/* Customer Navigation */}
+            <div id="customerNav" className="flex items-center space-x-8">
+              <button
+                className="nav-item active text-white font-medium px-4 py-2 rounded-lg"
+                onClick={() => showNavigation('transactions')}
+              >
+                <span className="mr-2">💳</span>Transactions
+              </button>
+              <button
+                className="nav-item text-white font-medium px-4 py-2 rounded-lg"
+                onClick={() => showNavigation('women')}
+              >
+                <span className="mr-2">👩</span>Women
+              </button>
+              <button
+                className="nav-item text-white font-medium px-4 py-2 rounded-lg"
+                onClick={() => showNavigation('learn')}
+              >
+                <span className="mr-2">📚</span>Learn
+              </button>
+              <button
+                className="nav-item text-white font-medium px-4 py-2 rounded-lg"
+                onClick={() => showNavigation('children')}
+              >
+                <span className="mr-2">👶</span>Children
+              </button>
+              <button
+                className="nav-item text-white font-medium px-4 py-2 rounded-lg"
+                onClick={() => showNavigation('chatbot')}
+              >
+                <span className="mr-2">🤖</span>FinBot
+              </button>
+            </div>
+          </div>
+
+          {/* Landing Navigation */}
+          <div
+            id="landingNavigation"
+            className={`md:flex items-center space-x-8 ${
+              currentNavigation === 'landing' ? 'flex' : 'hidden'
+            }`}
           >
-            Learn
-          </Link>
-          <Link
-            to="/sme"
-            className="hover:text-yellow-300 transition-colors duration-300"
+            {/* Language Selector */}
+  <div className="relative">
+        <button
+          id="languageButton"
+          className="nav-item text-white font-medium px-3 py-2 rounded-lg flex items-center"
+          onClick={toggleLanguageDropdown}
+        >
+          <span className="mr-2">🌐</span>
+          <span id="currentLanguage">{language}</span>
+          <svg
+            className="w-4 h-4 ml-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
           >
-            SME Toolkit
-          </Link>
-          <Link
-            to="/children"
-            className="hover:text-yellow-300 transition-colors duration-300"
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 9l-7 7-7-7"
+            ></path>
+          </svg>
+        </button>
+        {isLanguageDropdownOpen && (
+          <div
+            id="languageDropdown"
+            className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-50"
           >
-            Children
-          </Link>
-          <Link
-            to="/women"
-            className="hover:text-yellow-300 transition-colors duration-300"
-          >
-            Women
-          </Link>
-          <Link
-            to="/financial-learning"
-            className="hover:text-yellow-300 transition-colors duration-300"
-          >
-            Financial Learning
-          </Link>
+            <button
+              onClick={() => changeLanguage('EN')}
+              className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-t-lg"
+            >
+              🇺🇸 English
+            </button>
+            <button
+              onClick={() => changeLanguage('हिंदी')}
+              className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+            >
+              🇮🇳 हिंदी (Hindi)
+            </button>
+            <button
+              onClick={() => changeLanguage('தமிழ்')}
+              className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+            >
+              🇮🇳 தமிழ் (Tamil)
+            </button>
+            <button
+              onClick={() => changeLanguage('తెలుగు')}
+              className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+            >
+              🇮🇳 తెలుగు (Telugu)
+            </button>
+            <button
+              onClick={() => changeLanguage('বাংলা')}
+              className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+            >
+              🇮🇳 বাংলা (Bengali)
+            </button>
+            <button
+              onClick={() => changeLanguage('मराठी')}
+              className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-b-lg"
+            >
+              🇮🇳 मराठी (Marathi)
+            </button>
+          </div>
+        )}
+      </div>
+
+            {/* Dark Mode Toggle */}
+            <button
+              id="darkModeToggle"
+              className="text-white font-medium px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-20"
+              onClick={toggleDarkMode}
+            >
+              <span id="darkModeIcon">{isDarkMode ? '☀️' : '🌙'}</span>
+            </button>
+
+            <button
+              className="bg-white text-purple-800 font-bold px-6 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+              onClick={() => showNavigation('signIn')}
+            >
+              Login
+            </button>
+            <button
+              className="bg-yellow-400 text-purple-800 font-bold px-6 py-2 rounded-lg hover:bg-yellow-300 transition-colors"
+              onClick={() => showNavigation('signUp')}
+            >
+              Sign Up
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button
+              className="text-white hover:text-yellow-300"
+              onClick={toggleMobileMenu}
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div id="mobileMenu" className="md:hidden pb-4">
+            <button
+              className="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2"
+              onClick={() => showNavigation('transactions')}
+            >
+              <span className="mr-2">💳</span>Transactions
+            </button>
+            <button
+              className="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2"
+              onClick={() => showNavigation('women')}
+            >
+              <span className="mr-2">👩</span>Women
+            </button>
+            <button
+              className="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2"
+              onClick={() => showNavigation('learn')}
+            >
+              <span className="mr-2">📚</span>Learn
+            </button>
+            <button
+              className="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2"
+              onClick={() => showNavigation('children')}
+            >
+              <span className="mr-2">👶</span>Children
+            </button>
+            <button
+              className="block w-full text-left text-white font-medium px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 mb-2"
+              onClick={() => showNavigation('chatbot')}
+            >
+              <span className="mr-2">🤖</span>FinBot
+            </button>
+          </div>
+        )}
       </div>
     </nav>
   );
-}
+};
+
+export default Navbar;

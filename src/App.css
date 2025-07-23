@@ -1,46 +1,473 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+body {
+    font-family: 'Poppins', sans-serif;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.card-hover {
+    transition: all 0.3s ease;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-.card {
-  padding: 2em;
+.nav-item {
+    transition: all 0.3s ease;
+    position: relative;
 }
 
-.read-the-docs {
-  color: #888;
+.nav-item:hover {
+    transform: translateY(-2px);
+    background-color: white;
+    color: black;
 }
+
+.nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 3px;
+    background: #fbbf24;
+    border-radius: 2px;
+}
+
+.bounce {
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.hero-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+}
+
+.feature-icon {
+    transition: transform 0.3s ease;
+}
+
+.feature-icon:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.floating {
+    animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.dark {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+}
+
+/* Dark mode body background - force override */
+body.dark {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+    min-height: 100vh !important;
+}
+
+/* Dark mode page backgrounds - force override all variations */
+.dark .bg-gradient-to-br {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+}
+
+.dark body.bg-gradient-to-br {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+}
+
+.dark .bg-white {
+    background-color: #1f2937 !important;
+}
+
+.dark .text-gray-800 {
+    color: #f9fafb !important;
+}
+
+.dark .text-gray-600 {
+    color: #d1d5db !important;
+}
+
+.dark .text-gray-700 {
+    color: #e5e7eb !important;
+}
+
+.dark .text-gray-900 {
+    color: #f9fafb !important;
+}
+
+.dark .text-black {
+    color: #f9fafb !important;
+}
+
+/* Ensure all text elements are readable in dark mode */
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    color: #f9fafb !important;
+}
+
+.dark p {
+    color: #d1d5db !important;
+}
+
+.dark span {
+    color: #d1d5db !important;
+}
+
+.dark li {
+    color: #d1d5db !important;
+}
+
+.dark .bg-gray-50 {
+    background-color: #374151 !important;
+}
+
+.dark .bg-gray-100 {
+    background-color: #4b5563 !important;
+}
+
+/* Force all text inside white/gray backgrounds to be light in dark mode */
+.dark .bg-white *,
+.dark .bg-gray-50 *,
+.dark .bg-gray-100 * {
+    color: #f9fafb !important;
+}
+
+/* Override any remaining dark text */
+.dark .bg-white h1, .dark .bg-white h2, .dark .bg-white h3, .dark .bg-white h4, .dark .bg-white h5, .dark .bg-white h6,
+.dark .bg-gray-50 h1, .dark .bg-gray-50 h2, .dark .bg-gray-50 h3, .dark .bg-gray-50 h4, .dark .bg-gray-50 h5, .dark .bg-gray-50 h6,
+.dark .bg-gray-100 h1, .dark .bg-gray-100 h2, .dark .bg-gray-100 h3, .dark .bg-gray-100 h4, .dark .bg-gray-100 h5, .dark .bg-gray-100 h6 {
+    color: #f9fafb !important;
+}
+
+.dark .bg-white p, .dark .bg-white span, .dark .bg-white div,
+.dark .bg-gray-50 p, .dark .bg-gray-50 span, .dark .bg-gray-50 div,
+.dark .bg-gray-100 p, .dark .bg-gray-100 span, .dark .bg-gray-100 div {
+    color: #d1d5db !important;
+}
+
+.dark .border-gray-300 {
+    border-color: #6b7280 !important;
+}
+
+.dark .shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dark .hero-gradient {
+    background: linear-gradient(135deg, #4c1d95 0%, #581c87 50%, #7c2d12 100%);
+}
+
+.dark .gradient-bg {
+    background: linear-gradient(135deg, #4c1d95 0%, #581c87 100%);
+}
+
+/* Dark mode card backgrounds */
+.dark .bg-gradient-to-br.from-blue-50 {
+    background: linear-gradient(to bottom right, #1e3a8a, #1e40af) !important;
+}
+
+.dark .bg-gradient-to-br.from-green-50 {
+    background: linear-gradient(to bottom right, #166534, #15803d) !important;
+}
+
+.dark .bg-gradient-to-br.from-pink-50 {
+    background: linear-gradient(to bottom right, #be185d, #c2185b) !important;
+}
+
+.dark .bg-gradient-to-br.from-yellow-50 {
+    background: linear-gradient(to bottom right, #ca8a04, #d97706) !important;
+}
+
+.dark .bg-gradient-to-br.from-purple-50 {
+    background: linear-gradient(to bottom right, #7c3aed, #8b5cf6) !important;
+}
+
+.dark .bg-gradient-to-br.from-cyan-50 {
+    background: linear-gradient(to bottom right, #0891b2, #0284c7) !important;
+}
+
+.dark .bg-gradient-to-br.from-teal-50 {
+    background: linear-gradient(to bottom right, #0f766e, #0d9488) !important;
+}
+
+.dark .bg-gradient-to-br.from-rose-50 {
+    background: linear-gradient(to bottom right, #e11d48, #f43f5e) !important;
+}
+
+.dark .bg-gradient-to-br.from-orange-50 {
+    background: linear-gradient(to bottom right, #ea580c, #f97316) !important;
+}
+
+.dark .bg-gradient-to-br.from-indigo-50 {
+    background: linear-gradient(to bottom right, #4338ca, #6366f1) !important;
+}
+
+/* Specific card color fixes */
+.dark .bg-pink-50 {
+    background-color: #831843 !important;
+}
+
+.dark .bg-purple-50 {
+    background-color: #581c87 !important;
+}
+
+.dark .bg-teal-50 {
+    background-color: #134e4a !important;
+}
+
+.dark .bg-yellow-50 {
+    background-color: #92400e !important;
+}
+
+.dark .bg-blue-50 {
+    background-color: #1e3a8a !important;
+}
+
+.dark .bg-green-50 {
+    background-color: #166534 !important;
+}
+
+.dark .bg-cyan-50 {
+    background-color: #155e75 !important;
+}
+
+.dark .bg-sky-100 {
+    background-color: #0c4a6e !important;
+}
+
+/* Color-specific text fixes */
+.dark .text-pink-800 {
+    color: #fce7f3 !important;
+}
+
+.dark .text-purple-800 {
+    color: #f3e8ff !important;
+}
+
+.dark .text-teal-800 {
+    color: #ccfbf1 !important;
+}
+
+.dark .text-yellow-800 {
+    color: #fef3c7 !important;
+}
+
+.dark .text-blue-800 {
+    color: #dbeafe !important;
+}
+
+.dark .text-green-800 {
+    color: #dcfce7 !important;
+}
+
+.dark .text-cyan-800 {
+    color: #cffafe !important;
+}
+
+.dark .text-red-800 {
+    color: #fecaca !important;
+}
+
+.dark .text-orange-800 {
+    color: #fed7aa !important;
+}
+
+/* Border colors for dark mode */
+.dark .border-blue-100 {
+    border-color: #1e40af !important;
+}
+
+.dark .border-green-100 {
+    border-color: #15803d !important;
+}
+
+.dark .border-pink-100 {
+    border-color: #be185d !important;
+}
+
+.dark .border-yellow-100 {
+    border-color: #d97706 !important;
+}
+
+.dark .border-purple-100 {
+    border-color: #7c3aed !important;
+}
+
+.dark .border-cyan-100 {
+    border-color: #0891b2 !important;
+}
+
+.dark .border-yellow-200 {
+    border-color: #fbbf24 !important;
+}
+
+/* Additional text color fixes for dark mode */
+.dark .text-white {
+    color: #f9fafb !important;
+}
+
+.dark button {
+    color: inherit !important;
+}
+
+.dark .bg-gray-50 {
+    background-color: #374151 !important;
+    color: #f9fafb !important;
+}
+
+.dark .bg-gray-100 {
+    background-color: #4b5563 !important;
+    color: #f9fafb !important;
+}
+
+/* Fix specific text colors that might be problematic */
+.dark .text-gray-500 {
+    color: #9ca3af !important;
+}
+
+.dark .text-gray-400 {
+    color: #9ca3af !important;
+}
+
+/* Ensure form inputs are readable */
+.dark input {
+    background-color: #374151 !important;
+    color: #f9fafb !important;
+    border-color: #6b7280 !important;
+}
+
+.dark input::placeholder {
+    color: #9ca3af !important;
+}
+
+/* Form styling */
+.user-type-card {
+    transition: all 0.3s ease;
+}
+
+.user-type-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+input[type="radio"]:checked + .user-type-card {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Comprehensive dark mode text fixes */
+.dark .text-white {
+    color: #f9fafb !important;
+}
+
+/* Fix button text colors */
+.dark button:not(.bg-white):not(.bg-yellow-400):not(.bg-green-500):not(.bg-blue-500):not(.bg-purple-500):not(.bg-red-500):not(.bg-orange-500) {
+    color: #f9fafb !important;
+}
+
+/* Fix specific text color classes */
+.dark .text-gray-500 {
+    color: #9ca3af !important;
+}
+
+.dark .text-gray-400 {
+    color: #9ca3af !important;
+}
+
+/* Navigation text fixes */
+.dark .nav-item {
+    color: #f9fafb !important;
+}
+
+/* Card content fixes */
+.dark .card-hover h3,
+.dark .card-hover h4,
+.dark .card-hover p {
+    color: inherit !important;
+}
+
+/* Ensure form inputs are readable */
+.dark input {
+    background-color: #374151 !important;
+    color: #f9fafb !important;
+    border-color: #6b7280 !important;
+}
+
+.dark input::placeholder {
+    color: #9ca3af !important;
+}
+
+/* Fix dropdown text */
+.dark #languageDropdown {
+    background-color: #1f2937 !important;
+}
+
+.dark #languageDropdown button {
+    color: #f9fafb !important;
+}
+
+.dark #languageDropdown button:hover {
+    background-color: #374151 !important;
+}
+
+/* Fix any remaining issues with specific sections */
+.dark .section h2,
+.dark .section h3,
+.dark .section h4,
+.dark .section p,
+.dark .section span,
+.dark .section div {
+    color: #f9fafb !important;
+}
+
+/* Override any inline styles or specific classes */
+.dark * {
+    color: inherit !important;
+}
+
+.dark .bg-white,
+.dark .bg-gray-50,
+.dark .bg-gray-100 {
+    color: #f9fafb !important;
+}
+
+/* Ensure all children of dark backgrounds have light text */
+.dark .bg-white > *,
+.dark .bg-gray-50 > *,
+.dark .bg-gray-100 > * {
+    color: #f9fafb !important;
+}
+
+/* Fix nested elements */
+.dark .bg-white * *,
+.dark .bg-gray-50 * *,
+.dark .bg-gray-100 * * {
+    color: #d1d5db !important;
+}
+
 
 @import "tailwindcss";
 @import "tailwindcss/preflight";
-@tailwind utilities;
+
