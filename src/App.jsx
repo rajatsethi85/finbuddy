@@ -9,6 +9,7 @@ import LandingPage from './components/LandingPage';
 import { AuthProvider } from './context/AuthContext';
 import Login from './components/login';
 import SignUp from './components/Signup';
+import Transaction from './components/Transaction';
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/sme" element={<SmeToolkit />} />
+        <Route path="/dashboard" element={<Transaction />} />
       </Routes>
     </BrowserRouter>
   );

@@ -11,6 +11,10 @@ const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
+  
+    useEffect(() => {
+    console.log('Context updated:', isAuthenticated);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     const checkDevice = () => {

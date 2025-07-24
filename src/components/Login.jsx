@@ -1,16 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+// import { AuthContext } from '.context/AuthContextInstance.jsx';
+import { AuthContext } from '../context/AuthContextInstance';
+
+
 
 const Login = ({ handleLogin }) => {
   const [userType, setUserType] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
+  
+    const handleUserTypeSelection = (type) => {
+      setUserType(type);
+        // Update card styling
+        document.querySelectorAll('.user-type-card').forEach((card) => {
+            card.classList.remove('border-blue-500', 'border-green-500', 'bg-blue-50', 'bg-green-50');
+            card.classList.add('border-gray-200');
+        });
+
+        const selectedCard = document.querySelector(`input[value="${type}"]`)?.parentElement.querySelector('.user-type-card');
+        if (selectedCard) {
+            selectedCard.classList.remove('border-gray-200');
+            selectedCard.classList.add(type === 'customer' ? 'border-blue-500' : 'border-green-500');
+            selectedCard.classList.add(type === 'customer' ? 'bg-blue-50' : 'bg-green-50');
+        }
+    };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!userType) {
       alert('Please select whether you are a Customer or Retailer!');
       return;
     }
+    // api call to get user details and transaction details and redirect to dashboard
+    login();
+    navigate("/dashboard")
     handleLogin({ userType, email, password });
   };
 
@@ -36,7 +62,7 @@ const Login = ({ handleLogin }) => {
                   name="userType"
                   value="customer"
                   className="sr-only"
-                  onChange={() => setUserType('customer')}
+                  onClick={() => handleUserTypeSelection('customer')}
                 />
                 <div className="user-type-card border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-blue-500 transition-colors">
                   <div className="text-center">
@@ -51,7 +77,7 @@ const Login = ({ handleLogin }) => {
                   name="userType"
                   value="retailer"
                   className="sr-only"
-                  onChange={() => setUserType('retailer')}
+                  onClick={() => handleUserTypeSelection('retailer')}
                 />
                 <div className="user-type-card border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-green-500 transition-colors">
                   <div className="text-center">
